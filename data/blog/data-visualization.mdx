@@ -29,17 +29,30 @@ The data contains information about labor force status, marital status, educatio
 
 This information is important because it can reveal where needs are greatest, which groups may need support, and how conditions differ across states or populations. For example, an organization can use this kind of data to better plan programs, target outreach, or understand who they are serving. In that way, the data becomes more than numbers — it becomes information that supports better planning and stronger decisions.
 
+*Import Dependencies 🐍*
+
+Most projects rely on pre-written code libraries/modules whether written by the Notebook
+author or by a third-party. When importing from libraries, it is common to use aliases
+such as pd is used below as a shorthand for pandas.
+
+```python
 # Dependency Imports
 import pandas as pd
 import matplotlib.pyplot as plt
 import json
 from js import fetch
+```
+*Helper function(s) 🐍*
 
+Helper function enable us to write clean human readable code.
+
+```python
 # Helper function which uses the browser's built-in fetch API
 async def get_json(url):
     resp = await fetch(url)
     txt = await resp.text()
     return json.loads(txt)
+```
 
 # Data Acquisitiom
 url = "https://api.census.gov/data/2025/cps/basic/may?get=PEMLR,PWSSWGT,PEMARITL,PEEDUCA&for=state:*&key=YOURAPIKEY"
