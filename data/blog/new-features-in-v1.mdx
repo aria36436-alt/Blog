@@ -247,7 +247,7 @@ Here's how an author markdown file might look like:
 name: Tails Azimuth
 avatar: /static/images/avatar.png
 occupation: Professor of Atmospheric Science
-company: Stanford University
+company: School on Earth
 email: address@yoursite.com
 twitter: https://twitter.com/Twitter
 linkedin: https://www.linkedin.com
@@ -280,7 +280,7 @@ authors: ['default', 'sparrowhawk']
 ```
 
 A demo of a multiple authors post is shown in [Introducing Tailwind Nextjs Starter Blog post](/blog/introducing-tailwind-nextjs-starter-blog).
-
+ 
 ## Copy button for code blocks
 
 Hover over a code block and you will notice a GitHub-inspired copy button! You can modify `./components/Pre.js` to further customise it.
@@ -446,4 +446,64 @@ async redirects() {
     }
   ]
 }
+```python 
+
+# Dependency Imports
+import pandas as pd
+import matplotlib.pyplot as plt
+import json
+from js import fetch
+
+# Helper function which uses the browser's built-in fetch API
+async def get_json(url):
+    resp = await fetch(url)
+    txt = await resp.text()
+    return json.loads(txt)
+
+# Data Acquisitiom
+url = "https://api.census.gov/data/2025/cps/basic/may?get=PEMLR,PWSSWGT,PEMARITL,PEEDUCA&for=state:*&key=YOURAPIKEY"
+data = await get_json(url)
+
+# Data Wrangling
+df = pd.DataFrame(data[1:], columns=data[0])
+df["PWSSWGT"] = pd.to_numeric(df["PWSSWGT"], errors="coerce")
+df["PEMLR"] = pd.to_numeric(df["PEMLR"], errors="coerce")
+df["state"] = pd.to_numeric(df["state"], errors="coerce")
+
+# Meaningful labels
+pemlr_labels = {
+    -1: "Not in universe",
+    1: "Employed",
+    2: "Unemployed",
+    3: "Unemployed, on layoff",
+    4: "Not in labor force",
+    5: "Unknown",
+    6: "Armed forces",
+    7: "Other"
+}
+
+# Graph 1: Average weighted count by labor force status
+summary = df.groupby("PEMLR", as_index=False)["PWSSWGT"].mean().sort_values("PWSSWGT", ascending=False)
+summary["Label"] = summary["PEMLR"].map(lambda x: pemlr_labels.get(int(x), str(x)))
+
+fig, ax = plt.subplots(figsize=(10, 6))
+ax.bar(summary["Label"], summary["PWSSWGT"], color="steelblue")
+ax.set_title("Average PWSSWGT by Labor Force Status")
+ax.set_xlabel("Labor force status (PEMLR)")
+ax.set_ylabel("Average PWSSWGT")
+plt.xticks(rotation=30, ha="right")
+plt.tight_layout()
+plt.show()
+
+# Graph 2: Top 10 states by average weighted count
+state_summary = df.groupby("state", as_index=False)["PWSSWGT"].mean().sort_values("PWSSWGT", ascending=False).head(10)
+
+fig, ax = plt.subplots(figsize=(10, 6))
+ax.bar(state_summary["state"].astype(str), state_summary["PWSSWGT"], color="darkorange")
+ax.set_title("Top 10 States by Average PWSSWGT")
+ax.set_xlabel("State")
+ax.set_ylabel("Average PWSSWGT")
+plt.tight_layout()
+plt.show()
+
 ```
