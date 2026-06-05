@@ -53,6 +53,7 @@ async def get_json(url):
     return json.loads(txt)
 ```
 
+```python
 # Data Acquisitiom
 url = "https://api.census.gov/data/2025/cps/basic/may?get=PEMLR,PWSSWGT,PEMARITL,PEEDUCA&for=state:*&key=YOURAPIKEY"
 data = await get_json(url)
@@ -159,7 +160,4 @@ ax.set_xlabel("State")
 ax.set_ylabel("Average PWSSWGT")
 plt.tight_layout()
 plt.show()# Dependency Imports
-import pandas as pd
-import matplotlib.pyplot as plt
-import json
-from js import fetch
+```
