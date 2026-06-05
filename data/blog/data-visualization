@@ -1,19 +1,11 @@
 ---
-title: Images in Next.js
-date: '2020-11-11'
-tags: ['next js', 'guide']
+title: Data Visualization
+date: '2026-06-03'
+tags: ['markdown','code','data visualization','JupiterLite']
 draft: false
-summary: 'In this article we introduce adding images in the tailwind starter blog and the benefits and limitations of the next/image component.'
-authors: ['sparrowhawk']
+summary: Example of a markdown file wirh code blocks and syntax highlighting, 
+which provides a walk-through of a data visualization flow using JupyterLite.
 ---
-
-# Introduction
-
-The tailwind starter blog has out of the box support for [Next.js's built-in image component](https://nextjs.org/docs/api-reference/next/image) and automatically swaps out default image tags in markdown or mdx documents to use the Image component provided.
-
-# Usage
-
-To use in a new page route / javascript file, simply import the image component and call it e.g.
 
 ## Overview
 
@@ -28,83 +20,15 @@ This information is important because it can reveal where needs are greatest, wh
 ## Description
 
 This data matters because it helps people and organizations see patterns clearly, understand the needs of different groups, and make better decisions based on evidence rather than guesswork.
+*Import Dependencies
 
+## Overview
 
-# Dependency Imports
-import pandas as pd
-import matplotlib.pyplot as plt
-import json
-from js import fetch
-
-# Helper function which uses the browser's built-in fetch API
-async def get_json(url):
-    resp = await fetch(url)
-    txt = await resp.text()
-    return json.loads(txt)
-
-# Data Acquisitiom
-url = "https://api.census.gov/data/2025/cps/basic/may?get=PEMLR,PWSSWGT,PEMARITL,PEEDUCA&for=state:*&key=YOURAPIKEY"
-data = await get_json(url)
-
-# Data Wrangling
-df = pd.DataFrame(data[1:], columns=data[0])
-df["PWSSWGT"] = pd.to_numeric(df["PWSSWGT"], errors="coerce")
-df["PEMLR"] = pd.to_numeric(df["PEMLR"], errors="coerce")
-df["state"] = pd.to_numeric(df["state"], errors="coerce")
-
-# Meaningful labels
-pemlr_labels = {
-    -1: "Not in universe",
-    1: "Employed",
-    2: "Unemployed",
-    3: "Unemployed, on layoff",
-    4: "Not in labor force",
-    5: "Unknown",
-    6: "Armed forces",
-    7: "Other"
-}
-
-# Graph 1: Average weighted count by labor force status
-summary = df.groupby("PEMLR", as_index=False)["PWSSWGT"].mean().sort_values("PWSSWGT", ascending=False)
-summary["Label"] = summary["PEMLR"].map(lambda x: pemlr_labels.get(int(x), str(x)))
-
-fig, ax = plt.subplots(figsize=(10, 6))
-ax.bar(summary["Label"], summary["PWSSWGT"], color="steelblue")
-ax.set_title("Average PWSSWGT by Labor Force Status")
-ax.set_xlabel("Labor force status (PEMLR)")
-ax.set_ylabel("Average PWSSWGT")
-plt.xticks(rotation=30, ha="right")
-plt.tight_layout()
-plt.show()
-
-# Graph 2: Top 10 states by average weighted count
-state_summary = df.groupby("state", as_index=False)["PWSSWGT"].mean().sort_values("PWSSWGT", ascending=False).head(10)
-
-fig, ax = plt.subplots(figsize=(10, 6))
-ax.bar(state_summary["state"].astype(str), state_summary["PWSSWGT"], color="darkorange")
-ax.set_title("Top 10 States by Average PWSSWGT")
-ax.set_xlabel("State")
-ax.set_ylabel("Average PWSSWGT")
-plt.tight_layout()
-plt.show()# Dependency Imports
-import pandas as pd
-import matplotlib.pyplot as plt
-import json
-from js import fetch## Overview
-
-This section introduces the data used in the blog, explains what kind of data it is, and shows why it matters. The goal is to help readers understand that this is **decision-making data** that can support the organization of a specific group, even if they are not familiar with the terms or categories used.
-
+ section introduces the data used in the blog, explains what kind of data it is, and shows why it matters. The goal is to help readers understand that this is **decision-making data** that can support the organization of a specific group, even if they are not familiar with the terms or categories 
 The data contains information about labor force status, marital status, education, weight, and state. In simple terms, it helps show patterns about who is working, who is not, and how those patterns may differ across groups and locations. That makes it useful for people who need to understand community trends, plan services, or make informed choices based on real numbers.
 
 This information is important because it can reveal where needs are greatest, which groups may need support, and how conditions differ across states or populations. For example, an organization can use this kind of data to better plan programs, target outreach, or understand who they are serving. In that way, the data becomes more than numbers — it becomes information that supports better planning and stronger decisions.
 
-## Subheading
-
-## Description
-
-This data matters because it helps people and organizations see patterns clearly, understand the needs of different groups, and make better decisions based on evidence rather than guesswork.
-
-
 # Dependency Imports
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -165,58 +89,65 @@ plt.show()# Dependency Imports
 import pandas as pd
 import matplotlib.pyplot as plt
 import json
-from js import fetchjs
-import Image from 'next/image'
+from js import fetch
+# Dependency Imports
+import pandas as pd
+import matplotlib.pyplot as plt
+import json
+from js import fetch
 
-function Home() {
-  return (
-    <>
-      <h1>My Homepage</h1>
-      <Image src="/me.png" alt="Picture of the author" width={500} height={500} />
-      <p>Welcome to my homepage!</p>
-    </>
-  )
+# Helper function which uses the browser's built-in fetch API
+async def get_json(url):
+    resp = await fetch(url)
+    txt = await resp.text()
+    return json.loads(txt)
+
+# Data Acquisitiom
+url = "https://api.census.gov/data/2025/cps/basic/may?get=PEMLR,PWSSWGT,PEMARITL,PEEDUCA&for=state:*&key=YOURAPIKEY"
+data = await get_json(url)
+
+# Data Wrangling
+df = pd.DataFrame(data[1:], columns=data[0])
+df["PWSSWGT"] = pd.to_numeric(df["PWSSWGT"], errors="coerce")
+df["PEMLR"] = pd.to_numeric(df["PEMLR"], errors="coerce")
+df["state"] = pd.to_numeric(df["state"], errors="coerce")
+
+# Meaningful labels
+pemlr_labels = {
+    -1: "Not in universe",
+    1: "Employed",
+    2: "Unemployed",
+    3: "Unemployed, on layoff",
+    4: "Not in labor force",
+    5: "Unknown",
+    6: "Armed forces",
+    7: "Other"
 }
 
-export default Home
-```
+# Graph 1: Average weighted count by labor force status
+summary = df.groupby("PEMLR", as_index=False)["PWSSWGT"].mean().sort_values("PWSSWGT", ascending=False)
+summary["Label"] = summary["PEMLR"].map(lambda x: pemlr_labels.get(int(x), str(x)))
 
-For a markdown file, the default image tag can be used and the default `img` tag gets replaced by the `Image` component in the build process.
+fig, ax = plt.subplots(figsize=(10, 6))
+ax.bar(summary["Label"], summary["PWSSWGT"], color="steelblue")
+ax.set_title("Average PWSSWGT by Labor Force Status")
+ax.set_xlabel("Labor force status (PEMLR)")
+ax.set_ylabel("Average PWSSWGT")
+plt.xticks(rotation=30, ha="right")
+plt.tight_layout()
+plt.show()
 
-Assuming we have a file called `ocean.jpg` in `static/images/ocean.jpg`, the following line of code would generate the optimized image.
+# Graph 2: Top 10 states by average weighted count
+state_summary = df.groupby("state", as_index=False)["PWSSWGT"].mean().sort_values("PWSSWGT", ascending=False).head(10)
 
-```
-![ocean](/static/images/ocean.jpg)
-```
-
-Alternatively, since we are using mdx, we can just use the image component directly! Note, that you would have to provide a fixed width and height. The `img` tag method parses the dimension automatically.
-
-```js
-<Image alt="ocean" src="/static/images/ocean.jpg" width={256} height={128} />
-```
-
-_Note_: If you try to save the image, it is in webp format, if your browser supports it!
-
-![ocean](/static/images/ocean.jpeg)
-
-Photo by [YUCAR FotoGrafik](https://unsplash.com/@yucar?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText)
-on [Unsplash](https://unsplash.com/s/photos/sea?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText)
-
-# Benefits
-
-- Smaller image size with Webp (~30% smaller than jpeg)
-- Responsive images - the correct image size is served based on the user's viewport
-- Lazy loading - images load as they are scrolled to the viewport
-- Avoids [Cumulative Layout Shift](https://web.dev/cls/)
-- Optimization on demand instead of build-time - no increase in build time!
-
-# Limitations
-
-- Due to the reliance on `next/image`, unless you are using an external image CDN like Cloudinary or Imgix, it is practically required to use Vercel for hosting. This is because the component acts like a serverless function that calls a highly optimized image CDN.
-
-  If you do not want to be tied to Vercel, you can remove `imgToJsx` in `remarkPlugins` in `lib/mdx.js`. This would avoid substituting the default `img` tag.
-
-  Alternatively, one could wait for image optimization at build time to be supported. A different library, [next-optimized-images](https://github.com/cyrilwanner/next-optimized-images) does that, although it requires transforming the images through webpack which is not done here.
-
-- Images from external links are not passed through `next/image`
-- All images have to be stored in the `public` folder e.g `/static/images/ocean.jpeg`
+fig, ax = plt.subplots(figsize=(10, 6))
+ax.bar(state_summary["state"].astype(str), state_summary["PWSSWGT"], color="darkorange")
+ax.set_title("Top 10 States by Average PWSSWGT")
+ax.set_xlabel("State")
+ax.set_ylabel("Average PWSSWGT")
+plt.tight_layout()
+plt.show()# Dependency Imports
+import pandas as pd
+import matplotlib.pyplot as plt
+import json
+from js import fetch
